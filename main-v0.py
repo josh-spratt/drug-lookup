@@ -11,7 +11,7 @@ def get_list_of_potential_drug_matches(key, drug):
     params = {'count': '100', 'q': drug}
     req = requests.get(url, headers=headers, params=params)
     json_response = req.json()
-    return json_response
+    print(json_response)
 
 
 def generate_score_histogram_from_json_request(response_data):
@@ -29,7 +29,15 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--key")
 parser.add_argument("--drug")
 args = parser.parse_args()
-print(args.key)
-print(args.drug)
+if args.key and args.drug:
+    get_list_of_potential_drug_matches(args.key, args.drug)
+elif args.key:
+    print("Please enter '--key API KEY' and '--drug DRUG NAME' in the command line interface when executing this script")
+elif args.drug:
+    print("Please enter '--key API KEY' and '--drug DRUG NAME' in the command line interface when executing this script")
+else:
+    print("Please enter '--key API KEY' and '--drug DRUG NAME' in the command line interface when executing this script")
+
+
 """get_list_of_potential_drug_matches()
 generate_score_histogram_from_json_request(json_response)"""
