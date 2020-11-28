@@ -11,7 +11,7 @@ def get_list_of_potential_drug_matches(key, drug):
     params = {'count': '100', 'q': drug}
     req = requests.get(url, headers=headers, params=params)
     json_response = req.json()
-    print(json_response)
+    print(json.dumps(json_response, indent=4))
 
 
 def generate_score_histogram_from_json_request(response_data):
