@@ -11,7 +11,7 @@ def get_list_of_potential_drug_matches(key, drug):
     params = {'count': '100', 'q': drug}
     req = requests.get(url, headers=headers, params=params)
     json_response = req.json()
-    print(json.dumps(json_response, indent=4))
+    return json_response
 
 
 def generate_score_histogram_from_json_request(response_data):
@@ -25,12 +25,30 @@ def generate_score_histogram_from_json_request(response_data):
     plt.show()
 
 
+def find_max_match_scores(dict_of_matches):
+    max_score = 0
+
+    for match in dict_of_matches['results']:
+        if match["score"] > max_score:
+            max_score = match["score"]
+
+    max_score_list = []
+    for match in dict_of_matches['results']:
+        if match["score"] == max_score:
+            max_score_list.append(match)
+
+    return max_score_list
+
+
+
+
 parser = argparse.ArgumentParser()
 parser.add_argument("--key")
 parser.add_argument("--drug")
 args = parser.parse_args()
+
 if args.key and args.drug:
-    get_list_of_potential_drug_matches(args.key, args.drug)
+    matches = get_list_of_potential_drug_matches(args.key, args.drug)
 elif args.key:
     print("Please enter '--key API KEY' and '--drug DRUG NAME' in the command line interface when executing this script")
 elif args.drug:
@@ -38,6 +56,5 @@ elif args.drug:
 else:
     print("Please enter '--key API KEY' and '--drug DRUG NAME' in the command line interface when executing this script")
 
+best_match = find_max_match_scores(matches)
 
-"""get_list_of_potential_drug_matches()
-generate_score_histogram_from_json_request(json_response)"""
