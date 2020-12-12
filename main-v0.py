@@ -11,7 +11,11 @@ def get_list_of_potential_drug_matches(key, drug):
     params = {'count': '100', 'q': drug}
     req = requests.get(url, headers=headers, params=params)
     json_response = req.json()
-    return json_response
+    if json_response['total'] == 0:
+        print('I did not find that drug. Please check spelling and try again.')
+        quit()
+    if json_response['total'] >= 1:
+        return json_response
 
 
 def generate_score_histogram_from_json_request(response_data):
@@ -47,15 +51,23 @@ def user_verifies_max_score_correctness(list_of_max_scores):
         return list_of_max_scores
     if len(list_of_max_scores) > 1:
         print('I found multiple matches for your query which I can not distinguish from one another. Please try again with a more descriptive name.')
-        quit() 
+        quit()
 
+
+def get_rx_entry_from_id(key, list_of_max_scores):
+    for score in list_of_max_scores:
+        id = score['id']
+    url = 'https://api.seer.cancer.gov/rest/rx/latest/id/{}'.format(id)
+    headers = {'X-SEERAPI-Key': key}
+    req = requests.get(url, headers=headers)
+    json_response = req.json()
+    return json_response
 
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--key")
 parser.add_argument("--drug")
 args = parser.parse_args()
-
 if args.key and args.drug:
     matches = get_list_of_potential_drug_matches(args.key, args.drug)
 elif args.key:
@@ -65,6 +77,7 @@ elif args.drug:
 else:
     print("Please enter '--key API KEY' and '--drug DRUG NAME' in the command line interface when executing this script")
 
+
 best_match = find_max_match_scores(matches)
 user_verifies_max_score_correctness(best_match)
-print(best_match)
+dict_of_specific_drug_result = get_rx_entry_from_id(args.key, best_match)
