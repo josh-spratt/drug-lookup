@@ -69,6 +69,21 @@ def parse_desired_drug_data_from_json_response(resultant_dict):
                                           ' A broad overview of this drug\n3.) Alternate names for this drug\n4.) '
                                           'Primary site & histology information\n5.) Remarks, including recent FDA '
                                           'approvals, news, and history\n6.) Drug categorization'))
+    if (user_content_depth_selection == 1 or user_content_depth_selection == '1.' or user_content_depth_selection
+            == '1.)'or user_content_depth_selection == '1)' or user_content_depth_selection.lower() == 'one'):
+        name = resultant_dict['name']
+        print(name)
+        alternate_name = resultant_dict['alternate_name']
+        print(alternate_name)
+        category = resultant_dict['category']
+        print(category)
+        subcategory = resultant_dict['subcategory']
+        print(subcategory)
+        primary_site = resultant_dict['primary_site']
+        print(primary_site)
+        remarks = resultant_dict['remarks']
+        print(remarks)
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--key")
@@ -87,4 +102,5 @@ else:
 best_match = find_max_match_scores(matches)
 user_verifies_max_score_correctness(best_match)
 dict_of_specific_drug_result = get_rx_entry_from_id(args.key, best_match)
-print(json.dumps(dict_of_specific_drug_result, indent=2))
+#print(json.dumps(dict_of_specific_drug_result, indent=2))
+parse_desired_drug_data_from_json_response(dict_of_specific_drug_result)
