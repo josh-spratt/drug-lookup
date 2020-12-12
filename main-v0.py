@@ -27,18 +27,27 @@ def generate_score_histogram_from_json_request(response_data):
 
 def find_max_match_scores(dict_of_matches):
     max_score = 0
-
     for match in dict_of_matches['results']:
         if match["score"] > max_score:
             max_score = match["score"]
-
     max_score_list = []
     for match in dict_of_matches['results']:
         if match["score"] == max_score:
             max_score_list.append(match)
-
     return max_score_list
 
+
+def user_verifies_max_score_correctness(list_of_max_scores):
+    if len(list_of_max_scores) == 1:
+        for score in list_of_max_scores:
+            if score['type'] == 'DRUG':
+                print('I found 1 DRUG matching your search criteria.')
+            if score['type'] == 'REGIMEN':
+                print('I found 1 REGIMEN matching your search criteria.')
+        return list_of_max_scores
+    if len(list_of_max_scores) > 1:
+        print('I found multiple matches for your query which I can not distinguish from one another. Please try again with a more descriptive name.')
+        quit() 
 
 
 
@@ -57,4 +66,5 @@ else:
     print("Please enter '--key API KEY' and '--drug DRUG NAME' in the command line interface when executing this script")
 
 best_match = find_max_match_scores(matches)
-
+user_verifies_max_score_correctness(best_match)
+print(best_match)
