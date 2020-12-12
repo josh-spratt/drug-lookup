@@ -64,6 +64,12 @@ def get_rx_entry_from_id(key, list_of_max_scores):
     return json_response
 
 
+def parse_desired_drug_data_from_json_response(resultant_dict):
+    user_content_depth_selection = (input('What data are you looking for?\n1.) Very detailed drug information\n2.)'
+                                          ' A broad overview of this drug\n3.) Alternate names for this drug\n4.) '
+                                          'Primary site & histology information\n5.) Remarks, including recent FDA '
+                                          'approvals, news, and history\n6.) Drug categorization'))
+
 parser = argparse.ArgumentParser()
 parser.add_argument("--key")
 parser.add_argument("--drug")
@@ -81,3 +87,4 @@ else:
 best_match = find_max_match_scores(matches)
 user_verifies_max_score_correctness(best_match)
 dict_of_specific_drug_result = get_rx_entry_from_id(args.key, best_match)
+print(json.dumps(dict_of_specific_drug_result, indent=2))
