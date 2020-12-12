@@ -47,8 +47,17 @@ def user_verifies_max_score_correctness(list_of_max_scores):
         return list_of_max_scores
     if len(list_of_max_scores) > 1:
         print('I found multiple matches for your query which I can not distinguish from one another. Please try again with a more descriptive name.')
-        quit() 
+        quit()
 
+
+def get_rx_entry_from_id(key, list_of_max_scores):
+    for score in list_of_max_scores:
+        id = score['id']
+    url = 'https://api.seer.cancer.gov/rest/rx/latest/id/{}'.format(id)
+    headers = {'X-SEERAPI-Key': key}
+    req = requests.get(url, headers=headers)
+    json_response = req.json()
+    print(json.dumps(json_response, indent=4))
 
 
 parser = argparse.ArgumentParser()
@@ -67,4 +76,4 @@ else:
 
 best_match = find_max_match_scores(matches)
 user_verifies_max_score_correctness(best_match)
-print(best_match)
+get_rx_entry_from_id(args.key, best_match)
