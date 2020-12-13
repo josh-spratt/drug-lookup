@@ -22,8 +22,8 @@ def generate_score_histogram_from_json_request(response_data):
     # Generates a histogram that is the distribution of result match scores
     score_list = [int(result_dict['score'])
                   for result_dict in response_data['results']]
-    name_list = [result_dict['name']
-                 for result_dict in response_data['results']]
+    # name_list = [result_dict['name']
+    #              for result_dict in response_data['results']]
     print(json.dumps(response_data['results'], indent=4))
     plt.hist(score_list)
     plt.show()
