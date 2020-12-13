@@ -1,0 +1,57 @@
+{
+    "abbreviation": [
+        "string"
+    ],
+    "alternate_name": [
+        "string"
+    ],
+    "assigned_to": "string",
+    "category": [
+        "string"
+    ],
+    "do_not_code": "NO",
+    "drugs": [
+        "string"
+    ],
+    "evs_id": "string",
+    "field_notes": {
+        "additionalProp1": "string",
+        "additionalProp2": "string",
+        "additionalProp3": "string"
+    },
+    "fingerprint": "string",
+    "first_published": "2020-12-13T06:19:37.417Z",
+    "glossary": [
+        {
+            "category": [
+                "GENERAL"
+            ],
+            "end": 0,
+            "id": "string",
+            "keyword": "string",
+            "name": "string",
+            "start": 0
+        }
+    ],
+    "hidden": true,
+    "histology": "string",
+    "id": "string",
+    "last_modified": "2020-12-13T06:19:37.417Z",
+    "name": "string",
+    "note": "string",
+    "nsc_number": [
+        "string"
+    ],
+    "primary_site": [
+        "string"
+    ],
+    "radiation": "string",
+    "remarks": "string",
+    "score": 0,
+    "status": "string",
+    "subcategory": [
+        "string"
+    ],
+    "type": "DRUG",
+    "version": "string"
+}
